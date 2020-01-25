@@ -3,11 +3,19 @@ import axios from 'axios';
 
 export default class App extends Component{
 
+  state = {
+    posts: [],
+    loading: true
+  }
+
   componentDidMount(){
     axios('https://jsonplaceholder.typicode.com/posts')
 
     .then(res => {
-     console.log(res.data) 
+     this.setState({
+       posts: res.data,
+       loading: false
+     }) 
     })
 
     .catch(error => console.log(`Axios failed ${error}`))
@@ -15,7 +23,9 @@ export default class App extends Component{
 
   render(){
     return(
-      <h1>Hello World</h1>
+      <div>
+        {this.state.posts.map(post => <h1>{post.title}</h1>)}
+      </div>
     )
   }
 
